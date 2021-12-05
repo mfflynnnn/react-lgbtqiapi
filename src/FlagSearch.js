@@ -41,7 +41,7 @@ export default function FlagSearch(props) {
           <form>
             <input
               type="search"
-              className="form-search"
+              className="mx-sm-3 mb-2"
               placeholder="Search for a flag..."
               onChange={handleQueeryChange}
             />
@@ -54,6 +54,7 @@ export default function FlagSearch(props) {
             </button>
           </form>
         </section>
+        <Results results={results} />
       </div>
     );
   } else {
