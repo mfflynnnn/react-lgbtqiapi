@@ -1,15 +1,15 @@
-import Search from "./FlagSearch.js";
-import "./App.css";
 import FlagSearch from "./FlagSearch.js";
+import "./App.css";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>hiya!</h1>
-        <Search />
-      </header>
-      <FlagSearch />
+      <div className="container">
+        <header className="App-header">
+          <h1>hiya!</h1>
+        </header>
+        <FlagSearch defaultQueery="transgender_1999" />
+      </div>
     </div>
   );
 }

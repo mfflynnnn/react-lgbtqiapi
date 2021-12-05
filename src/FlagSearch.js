@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import axios from "axios";
+import Results from "./Results";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./FlagSearch.css";
 
-export default function FlagSearch() {
+export default function FlagSearch(props) {
+  const [queery, setQueery] = useState(props.defaultQueery);
   const [loaded, setLoaded] = useState(false);
-  const [queery, setQueery] = useState(null);
   const [results, setResults] = useState(null);
 
   function load() {
@@ -12,11 +15,21 @@ export default function FlagSearch() {
   }
 
   function search() {
-    let id = "trans";
-    let apiUrl = `https://pride.dev/api/flags/${id}`;
+    let apiUrl = `https://pride.dev/api/flags/${queery}`;
+    console.log(apiUrl);
+    axios.get(apiUrl).then(handleResponse);
   }
 
-  function handleResponse(event) {
+  function handleQueeryChange(event) {
+    setQueery(event.target.value);
+  }
+
+  function handleResponse(response) {
+    console.log("response", response);
+    setResults(response.data);
+  }
+
+  function handleSubmit(event) {
     event.preventDefault();
     search();
   }
@@ -24,17 +37,23 @@ export default function FlagSearch() {
   if (loaded) {
     return (
       <div className="Search">
-        <form>
-          <input
-            type="search"
-            className="form-search"
-            placeholder="Search for a flag..."
-            onChange={handleResponse}
-          />
-          <button type="submit" className="btn btn-primary mb-2">
-            Search
-          </button>
-        </form>
+        <section>
+          <form>
+            <input
+              type="search"
+              className="form-search"
+              placeholder="Search for a flag..."
+              onChange={handleQueeryChange}
+            />
+            <button
+              type="submit"
+              className="btn btn-primary mb-2"
+              onSubmit={handleSubmit}
+            >
+              Search
+            </button>
+          </form>
+        </section>
       </div>
     );
   } else {
