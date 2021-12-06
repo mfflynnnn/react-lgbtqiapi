@@ -16,8 +16,19 @@ export default function FlagSearch(props) {
 
   function search() {
     let apiUrl = `https://pride.dev/api/flags/${queery}`;
-    console.log(apiUrl);
-    axios.get(apiUrl).then(handleResponse);
+    let corsUrl = `https://cors-anywhere.herokuapp.com/${apiUrl}`;
+    console.log(corsUrl);
+    axios
+      .get(apiUrl)
+      .then(handleResponse)
+      .catch(function (error) {
+        console.log("Error", error);
+        if (error.response) {
+          console.log("errorwithdata", error.response.data);
+          console.log("errorwithstatus", error.response.status);
+          console.log("errorwithheaders", error.response.headers);
+        }
+      });
   }
 
   function handleQueeryChange(event) {
@@ -25,8 +36,8 @@ export default function FlagSearch(props) {
   }
 
   function handleResponse(response) {
-    console.log("response", response);
-    setResults(response.data);
+    console.log("AMIGETTINGARESPONSE", response);
+    setResults(response);
   }
 
   function handleSubmit(event) {
